@@ -1,4 +1,23 @@
-/* Custom styles */
 body {
-  padding-top: 56px; /* Adjust for fixed navbar */
+  background-color: black;
+  color: white;
+  padding-top: 56px;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.bg-light {
+  background-color: black !important;
+}
+
+.bg-white {
+  background-color: black !important;
+}
+
+.text-light {
+  color: white !important;
 }
