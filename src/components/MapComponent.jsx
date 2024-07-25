@@ -1,27 +1,18 @@
-import { useEffect, useState } from "react";
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import geoData from "../data/us-states.json";
+
 import PropTypes from "prop-types";
-import { fetchMedicaidCoverage } from "../api";
 
 const MapComponent = ({ onStateClick }) => {
-  const [geoJsonData, setGeoJsonData] = useState(null);
-
-  useEffect(() => {
-    // Fetch GeoJSON data for US states
-    fetch(
-      "https://raw.githubusercontent.com/PublicaMundi/MappingAPI/master/data/geojson/us-states.json"
-    )
-      .then((response) => response.json())
-      .then((data) => setGeoJsonData(data));
-  }, []);
-
+  // ...
   const onEachFeature = (feature, layer) => {
     layer.on({
-      click: async () => {
-        const stateCode = feature.properties.postal;
-        const message = await fetchMedicaidCoverage(stateCode);
-        onStateClick(message);
+      click: () => {
+        console.log("Feature properties:", feature.properties);
+        if (onStateClick) {
+          onStateClick(feature.properties.name);
+        }
       },
     });
   };
@@ -30,15 +21,13 @@ const MapComponent = ({ onStateClick }) => {
     <MapContainer
       center={[37.8, -96]}
       zoom={4}
-      style={{ height: "500px", width: "100%" }}
+      style={{ height: "600px", width: "100%" }}
     >
       <TileLayer
         url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       />
-      {geoJsonData && (
-        <GeoJSON data={geoJsonData} onEachFeature={onEachFeature} />
-      )}
+      <GeoJSON data={geoData} onEachFeature={onEachFeature} />
     </MapContainer>
   );
 };

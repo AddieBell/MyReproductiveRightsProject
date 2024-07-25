@@ -1,4 +1,6 @@
-import pool from "./db.js";
+import axios from "axios";
+
+const apiKey = process.env.API_KEY; // Use API key from .env
 
 export const fetchMedicaidCoverage = async (stateCode) => {
   if (!stateCode) {
@@ -6,16 +8,18 @@ export const fetchMedicaidCoverage = async (stateCode) => {
     return "State code is undefined";
   }
 
+  const apiUrl = `https://api.abortionpolicyapi.com/v1/insurance_coverage/states/${stateCode}`;
+
   try {
-    const [rows] = await pool.query(
-      "SELECT * FROM coverage WHERE state_code = ?",
-      [stateCode]
-    );
-    const stateData = rows[0];
+    const response = await axios.get(apiUrl, {
+      headers: { Authorization: `Bearer ${apiKey}` },
+    });
+
+    const stateData = response.data[stateCode];
 
     if (stateData) {
       const medicaidKeys = Object.keys(stateData).filter(
-        (key) => key.includes("medicaid") && stateData[key] === 1
+        (key) => key.includes("medicaid") && stateData[key] === true
       );
 
       const coverageDescriptions = medicaidKeys.map((key) =>

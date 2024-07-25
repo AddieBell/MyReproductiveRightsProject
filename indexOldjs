@@ -1,0 +1,26 @@
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import { fetchMedicaidCoverage } from "./src/api.js";
+
+dotenv.config(); // Load environment variables from .env file
+
+const app = express();
+const port = 3000;
+
+app.use(cors());
+
+app.get("/coverage/:stateCode", async (req, res) => {
+  const stateCode = req.params.stateCode;
+  try {
+    const result = await fetchMedicaidCoverage(stateCode);
+    res.json({ coverage: result });
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
