@@ -2,6 +2,18 @@
 
 ## HOME
 
+## WHAT'S LEFT TO FOCUS ON
+
+1. Clean up the top
+2. Get rid of map, replace with gold map image and just use the searchbar
+3. Make sure the navbar works for large screen and mobile 
+4. Fix routes for Home Page, About Page, and Search Page
+5. Fix Fetch API
+6. Make sure we know what the results means in layman's terms
+7. Get rid of city and just keep State
+8. Insert images into HomePage and SearchPage
+9. Clean up CSS
+
 KNOW YOUR RIGHTS
 
 - make KNOW YOUR RIGHTS gold
@@ -12,6 +24,10 @@ Where Your Journey Matters
 
 - insert uterus image
 - insert hand image
+
+## MAKE A HOME PAGE, ABOUT PAGE, & SEARCH PAGE
+
+- include navigable links
 
 ### Header
 
