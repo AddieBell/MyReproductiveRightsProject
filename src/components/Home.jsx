@@ -1,3 +1,6 @@
+import uterus from "../assets/3.png";
+import hand from "../assets/4.png";
+
 const Home = () => {
   return (
     <div className="Home">
@@ -11,6 +14,10 @@ const Home = () => {
           </p>
         </div>
         <h2>Where Your Journey Matters</h2>
+        <div className="image-container">
+          <img src={uterus} alt="Uterus Logo" className="image" />
+          <img src={hand} alt="Image of hand" className="image" />
+        </div>
       </header>
     </div>
   );
