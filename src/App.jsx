@@ -2,6 +2,10 @@ import { useState } from "react";
 import SearchForm from "./components/SearchForm";
 import MapComponent from "./components/MapComponent";
 import ResultsList from "./components/ResultsList";
+import Home from "./components/Home";
+import About from "./components/About";
+import Navbar from "./components/Navbar";
+// import "./styles.css";
 
 function App() {
   const [results, setResults] = useState([]);
@@ -50,11 +54,15 @@ function App() {
   };
 
   return (
-    <div className='App'>
-      <h1>Reproductive Rights Resources</h1>
+    <div className="App">
+      <Navbar />
+      {/* <h1>Reproductive Rights Resources</h1> */}
       <SearchForm onSearch={handleSearch} />
       <MapComponent onStateClick={handleStateClick} />
       <ResultsList results={results} />
+      <Home />
+      <About />
+      {/* <Search /> */}
       <p>{coverageMessage}</p>
     </div>
   );

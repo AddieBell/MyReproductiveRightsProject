@@ -47,3 +47,68 @@ body {
 .mt-60 {
   margin-top: 60px;
 }
+
+/*Added Stylization to the Home.jsx page*/
+
+.Home {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100vh;
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.header {
+  flex: 1;
+  text-align: right;
+}
+
+.header h1 {
+  font-size: 3rem;
+  text-transform: uppercase;
+  color: gold;
+  margin-bottom: 20px;
+}
+
+.main-content {
+  text-align: center;
+}
+
+.main-content p {
+  font-size: 1.2rem;
+}
+
+.header h2 {
+  font-size: 1.5rem;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+/* Added stylization to the About.jsx page*/
+
+.about {
+  text-align: center;
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: gold;
+}
+
+.content {
+  text-align: center;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: white;
+}
