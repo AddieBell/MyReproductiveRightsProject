@@ -1,71 +1,52 @@
-import { useState } from "react";
+// import { useState } from "react";
 import SearchForm from "./components/SearchForm";
-import MapComponent from "./components/MapComponent";
-import ResultsList from "./components/ResultsList";
+// import MapComponent from "./components/MapComponent";
+// import ResultsList from "./components/ResultsList";
 import Home from "./components/Home";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 // import "./styles.css";
 
 function App() {
-  const [results, setResults] = useState([]);
-  const [coverageMessage, setCoverageMessage] = useState("");
-
-  const handleSearch = async (city, stateName) => {
-    console.log(`City: ${city}, State: ${stateName}`);
-    try {
-      const response = await fetch(
-        `http://localhost:3000/resources?city=${encodeURIComponent(
-          city
-        )}&state=${stateName}`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      setResults(data.results);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
-
-  const handleStateClick = async (stateName) => {
-    console.log(`State clicked: ${stateName}`);
-    try {
-      const response = await fetch(
-        `http://localhost:3000/coverage/${stateName}`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      const formattedCoverage = Object.entries(data.coverage).map(
-        ([key, value]) => ({
-          key,
-          value: key === "state_code" ? value : value ? "Yes" : "No",
-        })
-      );
-      console.log("Formatted Coverage:", formattedCoverage); // Log the fetched and formatted data
-      setCoverageMessage(`Coverage for ${stateName}`);
-      setResults(formattedCoverage);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
-
   return (
-    <div className="App">
-      <Navbar />
-      {/* <h1>Reproductive Rights Resources</h1> */}
-      <SearchForm onSearch={handleSearch} />
-      <MapComponent onStateClick={handleStateClick} />
-      <ResultsList results={results} />
-      <Home />
-      <About />
-      {/* <Search /> */}
-      <p>{coverageMessage}</p>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar />
+        {/* <p>{coverageMessage}</p> */}
+      </div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/search" element={<SearchForm />} />
+      </Routes>
+    </Router>
   );
+
+  // return (
+  //   <Router>
+  //     <div>
+  //       <nav>
+  //         <ul>
+  //           <li>
+  //             <Link to="/">Home</Link>
+  //           </li>
+  //           <li>
+  //             <Link to="/about">About</Link>
+  //           </li>
+  //           <li>
+  //             <Link to="/search">Search</Link>
+  //           </li>
+  //         </ul>
+  //       </nav>
+  //       <Routes>
+  //         <Route path="/" element={<Home />} />
+  //         <Route path="/about" element={<About />} />
+  //         <Route path="/search" element={<SearchForm />} />
+  //       </Routes>
+  //     </div>
+  //   </Router>
+  // );
 }
 
 export default App;
