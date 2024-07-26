@@ -1,34 +1,20 @@
-import pool from "./db.js";
+const apiKey = import.meta.env.VITE_API_KEY;
 
-export const fetchMedicaidCoverage = async (stateCode) => {
-  if (!stateCode) {
-    console.error("fetchMedicaidCoverage called with undefined stateCode");
-    return "State code is undefined";
-  }
-
+export const fetchCoverageData = async (stateCode) => {
   try {
-    const [rows] = await pool.query(
-      "SELECT * FROM coverage WHERE state_code = ?",
-      [stateCode]
+    const response = await fetch(
+      `https://api.abortionpolicyapi.com/v1/insurance_coverage/states/${stateCode}`,
+      {
+        headers: { Token: apiKey },
+      }
     );
-    const stateData = rows[0];
-
-    if (stateData) {
-      const medicaidKeys = Object.keys(stateData).filter(
-        (key) => key.includes("medicaid") && stateData[key] === 1
-      );
-
-      const coverageDescriptions = medicaidKeys.map((key) =>
-        key.split("_").slice(2).join(" ")
-      );
-
-      return `In ${stateCode}, Medicaid covers abortion when it's: ${coverageDescriptions.join(
-        ", "
-      )}.`;
-    } else {
-      return `No data found for state: ${stateCode}`;
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    const data = await response.json();
+    return data;
   } catch (error) {
-    return `Error fetching data: ${error.message}`;
+    console.error("Error fetching data:", error);
+    throw error;
   }
 };

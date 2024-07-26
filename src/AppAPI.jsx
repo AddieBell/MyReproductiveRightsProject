@@ -1,9 +1,7 @@
-import { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import SearchForm from "./components/SearchForm";
-import Home from "./components/Home";
-import About from "./components/About";
-import Navbar from "./components/Navbar";
+import React, { useState } from "react";
+import SearchForm from "./components/SearchForm.jsx";
+import MapComponent from "./components/MapComponent.jsx";
+import ResultsList from "./components/ResultsList.jsx";
 import { stateNameToCode } from "./stateMappings.js";
 
 function App() {
@@ -84,28 +82,16 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className='App'>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/about' element={<About />} />
-          <Route
-            path='/search'
-            element={
-              <SearchForm
-                onSearch={handleSearch}
-                onStateClick={handleStateClick}
-                searchResults={searchResults}
-                mapResults={mapResults}
-                coverageMessage={coverageMessage}
-                stateName={stateName}
-              />
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+    <div className='App'>
+      <h1>Reproductive Rights Resources</h1>
+      <SearchForm onSearch={handleSearch} />
+      <MapComponent onStateClick={handleStateClick} />
+      <ResultsList
+        stateName={stateName}
+        results={searchResults.length > 0 ? searchResults : mapResults}
+      />
+      {coverageMessage && <p>{coverageMessage}</p>}
+    </div>
   );
 }
 
