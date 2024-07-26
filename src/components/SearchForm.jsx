@@ -1,91 +1,70 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import MapComponent from "./MapComponent";
 import ResultsList from "./ResultsList";
+import { stateNameToCode } from "../stateMappings.js";
 
-const SearchForm = () => {
-  const [city, setCity] = useState("");
+const SearchForm = ({
+  onSearch,
+  onStateClick,
+  searchResults,
+  mapResults,
+  coverageMessage,
+  stateName,
+}) => {
   const [state, setState] = useState("");
-
-  const [results, setResults] = useState([]);
-  const [coverageMessage, setCoverageMessage] = useState("");
-
-  const handleSearch = async (city, stateName) => {
-    console.log(`City: ${city}, State: ${stateName}`);
-    try {
-      const response = await fetch(
-        `http://localhost:3000/resources?city=${encodeURIComponent(
-          city
-        )}&state=${stateName}`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      setResults(data.results);
-    } catch (error) {
-      console.error("Fetch error:", error);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    handleSearch(city, state);
-  };
-
-  const handleStateClick = async (stateName) => {
-    console.log(`State clicked: ${stateName}`);
-    try {
-      const response = await fetch(
-        `http://localhost:3000/coverage/${stateName}`
-      );
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      const data = await response.json();
-      const formattedCoverage = Object.entries(data.coverage).map(
-        ([key, value]) => ({
-          key,
-          value: key === "state_code" ? value : value ? "Yes" : "No",
-        })
-      );
-      console.log("Formatted Coverage:", formattedCoverage); // Log the fetched and formatted data
-      setCoverageMessage(`Coverage for ${stateName}`);
-      setResults(formattedCoverage);
-    } catch (error) {
-      console.error("Fetch error:", error);
+    const normalizedState = state.trim().toLowerCase();
+    const stateName =
+      normalizedState.charAt(0).toUpperCase() + normalizedState.slice(1);
+    const stateCode =
+      stateNameToCode[stateName] ||
+      stateNameToCode[normalizedState.toUpperCase()];
+    if (stateCode) {
+      onSearch(stateName); // Pass the state name to the parent component
+    } else {
+      alert("Invalid state name or code");
     }
   };
 
   return (
-    <>
-      <MapComponent onStateClick={handleStateClick} />
-
+    <div>
       <form onSubmit={handleSubmit}>
-        {/* <div>
-        <label>
-          City:
-          <input
-            type='text'
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-          />
-        </label>
-      </div> */}
         <div>
+          <p>
+            Users from Hawaii and Alaska, please use State input rather than
+            map.
+          </p>
           <label>
             State:
             <input
-              type="text"
+              type='text'
               value={state}
               onChange={(e) => setState(e.target.value)}
             />
           </label>
         </div>
-        <button type="submit">Search</button>
+        <button type='submit'>Search</button>
       </form>
-      <ResultsList results={results} />
-    </>
+      <MapComponent onStateClick={onStateClick} />
+      <ResultsList
+        stateName={stateName}
+        results={searchResults.length > 0 ? searchResults : mapResults}
+      />
+      {coverageMessage && <p>{coverageMessage}</p>}
+    </div>
   );
+};
+
+SearchForm.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+  onStateClick: PropTypes.func.isRequired,
+  searchResults: PropTypes.array.isRequired,
+  mapResults: PropTypes.array.isRequired,
+  coverageMessage: PropTypes.string.isRequired,
+  stateName: PropTypes.string.isRequired,
 };
 
 export default SearchForm;

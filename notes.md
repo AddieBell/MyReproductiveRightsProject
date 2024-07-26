@@ -1,12 +1,17 @@
 # TO-DO
 
+## API Files
+
+index.js
+App.jsx
+
 ## HOME
 
 ## WHAT'S LEFT TO FOCUS ON
 
 1. Clean up the top
 2. Get rid of map, replace with gold map image and just use the searchbar
-3. Make sure the navbar works for large screen and mobile 
+3. Make sure the navbar works for large screen and mobile
 4. Fix routes for Home Page, About Page, and Search Page
 5. Fix Fetch API
 6. Make sure we know what the results means in layman's terms
