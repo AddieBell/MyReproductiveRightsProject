@@ -22,6 +22,9 @@ const SearchForm = ({
     const stateCode =
       stateNameToCode[stateName] ||
       stateNameToCode[normalizedState.toUpperCase()];
+    console.log(`Normalized State: ${normalizedState}`); // Add this line
+    console.log(`State Name: ${stateName}`); // Add this line
+    console.log(`State Code: ${stateCode}`); // Add this line
     if (stateCode) {
       onSearch(stateName); // Pass the state name to the parent component
     } else {

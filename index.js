@@ -1,80 +1,132 @@
 import express from "express";
 import cors from "cors";
-import fetch from "node-fetch"; // Ensure node-fetch is installed
+import fetch from "node-fetch";
 import dotenv from "dotenv";
-import { stateNameToCode } from "./src/stateMappings.js";
 
-dotenv.config(); // Load environment variables from .env file
+// Load environment variables from .env file
+dotenv.config();
 
 const app = express();
-const port = 3000;
+const PORT = 3000;
+const apiKey = process.env.API_KEY;
 
 app.use(cors());
 
-const apiKey = process.env.API_KEY;
-const maxRetries = 3; // Number of retries for API calls
-
-const fetchWithRetry = async (url, options, retries = maxRetries) => {
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    return await response.json();
-  } catch (error) {
-    if (retries > 1) {
-      console.warn(`Retrying... (${maxRetries - retries + 1})`);
-      return fetchWithRetry(url, options, retries - 1);
-    } else {
-      throw error;
-    }
-  }
+const stateCodeToName = {
+  AL: "Alabama",
+  AK: "Alaska",
+  AZ: "Arizona",
+  AR: "Arkansas",
+  CA: "California",
+  CO: "Colorado",
+  CT: "Connecticut",
+  DE: "Delaware",
+  FL: "Florida",
+  GA: "Georgia",
+  HI: "Hawaii",
+  ID: "Idaho",
+  IL: "Illinois",
+  IN: "Indiana",
+  IA: "Iowa",
+  KS: "Kansas",
+  KY: "Kentucky",
+  LA: "Louisiana",
+  ME: "Maine",
+  MD: "Maryland",
+  MA: "Massachusetts",
+  MI: "Michigan",
+  MN: "Minnesota",
+  MS: "Mississippi",
+  MO: "Missouri",
+  MT: "Montana",
+  NE: "Nebraska",
+  NV: "Nevada",
+  NH: "New Hampshire",
+  NJ: "New Jersey",
+  NM: "New Mexico",
+  NY: "New York",
+  NC: "North Carolina",
+  ND: "North Dakota",
+  OH: "Ohio",
+  OK: "Oklahoma",
+  OR: "Oregon",
+  PA: "Pennsylvania",
+  RI: "Rhode Island",
+  SC: "South Carolina",
+  SD: "South Dakota",
+  TN: "Tennessee",
+  TX: "Texas",
+  UT: "Utah",
+  VT: "Vermont",
+  VA: "Virginia",
+  WA: "Washington",
+  WV: "West Virginia",
+  WI: "Wisconsin",
+  WY: "Wyoming",
 };
 
 app.get("/coverage/:stateCode", async (req, res) => {
   const stateCode = req.params.stateCode;
-  console.log(`Received request for state code: ${stateCode}`);
+  const stateName = stateCodeToName[stateCode];
+  console.log(`Received coverage request for state code: ${stateCode}`);
   try {
-    const data = await fetchWithRetry(
+    const response = await fetch(
       `https://api.abortionpolicyapi.com/v1/insurance_coverage/states/${stateCode}`,
-      { headers: { Token: apiKey } },
-      maxRetries
+      {
+        headers: { Token: apiKey },
+      }
     );
-    console.log(`Data received for state code ${stateCode}:`, data);
-    const stateName = Object.keys(data)[0]; // Get the state name from the response
+
+    console.log(`API response status: ${response.status}`);
+    const data = await response.json();
+    console.log(`Data received from API for state code ${stateCode}:`, data);
+
     if (!data[stateName]) {
-      throw new Error(`No coverage data found for state: ${stateName}`);
+      console.error(`No coverage data found for state: ${stateCode}`);
+      return res
+        .status(404)
+        .json({ error: `No coverage data found for state: ${stateCode}` });
     }
+
+    console.log(`Coverage data for state code ${stateCode}:`, data[stateName]);
     res.json({ coverage: data[stateName] });
   } catch (error) {
-    console.error("Error fetching data:", error.message);
-    res.status(500).send(`Internal Server Error: ${error.message}`);
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
 app.get("/resources/:stateCode", async (req, res) => {
   const stateCode = req.params.stateCode;
+  const stateName = stateCodeToName[stateCode];
   console.log(`Received resources request for state code: ${stateCode}`);
-  // Fetch resources for the given state code. For now, we simulate this with a dummy response.
-  // Replace this with actual API calls if you have another API endpoint for resources.
   try {
-    const data = await fetchWithRetry(
+    const response = await fetch(
       `https://api.abortionpolicyapi.com/v1/insurance_coverage/states/${stateCode}`,
-      { headers: { Token: apiKey } },
-      maxRetries
+      {
+        headers: { Token: apiKey },
+      }
     );
-    console.log(`Resources data received for state code ${stateCode}:`, data);
-    const stateName = Object.keys(data)[0]; // Get the state name from the response
+
+    console.log(`API response status: ${response.status}`);
+    const data = await response.json();
+    console.log(`Data received from API for state code ${stateCode}:`, data);
+
     if (!data[stateName]) {
-      throw new Error(`No resources data found for state: ${stateName}`);
+      console.error(`No resources data found for state: ${stateCode}`);
+      return res
+        .status(404)
+        .json({ error: `No resources data found for state: ${stateCode}` });
     }
-    res.json({ results: data[stateName] }); // Adjust this according to the actual data structure
+
+    console.log(`Resources data for state code ${stateCode}:`, data[stateName]);
+    res.json({ results: data[stateName] });
   } catch (error) {
-    console.error("Error fetching resources:", error.message);
-    res.status(500).send(`Internal Server Error: ${error.message}`);
+    console.error("Error fetching data:", error);
+    res.status(500).json({ error: error.message });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });

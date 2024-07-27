@@ -51,6 +51,7 @@ function App() {
       console.error(`Invalid state name: ${stateName}`);
       return;
     }
+    console.log(`State code for ${stateName}: ${stateCode}`); // Add this line
     setCoverageMessage(""); // Clear the coverage message when a new state is clicked
     try {
       const response = await fetch(

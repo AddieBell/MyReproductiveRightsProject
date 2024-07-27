@@ -2,14 +2,8 @@
 body {
   background-color: black;
   color: white;
-  padding-top: 80px; /* Adjust this value based on the new height of your navbar */
-}
-
-/* Ensure the #root element spans the full height and maintains the background */
-#root {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+  margin: 0;
+  padding-top: 0;
 }
 
 /* Override Bootstrap classes if necessary */
@@ -25,90 +19,74 @@ body {
   color: white !important;
 }
 
+.navbar {
+  margin-bottom: 0;
+}
+
 .navbar-brand img {
-  margin-right: 10px; /* Space between logo and brand name */
+  margin-right: 10px;
 }
 
 .navbar-logo {
-  width: 120px; /* Adjust the width to 200px */
-  height: auto; /* Maintain aspect ratio */
+  width: 150px;
+  height: auto;
 }
 
-/* Utility class for vertical spacing */
-
-.mt-20 {
-  margin-top: 20px;
-}
-
-.mt-40 {
-  margin-top: 40px;
-}
-
-.mt-60 {
-  margin-top: 60px;
-}
-
-/*Added Stylization to the Home.jsx page*/
-
+/* Stylization for the Home page */
 .Home {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: black;
   color: white;
-  padding: 20px;
 }
 
-.header {
-  flex: 1;
-  text-align: right;
+.middle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding-bottom: 0;
 }
 
-.header h1 {
-  font-size: 3rem;
-  text-transform: uppercase;
-  color: gold;
-  margin-bottom: 20px;
-}
-
-.main-content {
-  text-align: center;
-}
-
-.main-content p {
-  font-size: 1.2rem;
-}
-
-.header h2 {
-  font-size: 1.5rem;
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
-}
-
-/* Added stylization to the About.jsx page*/
-
-.about {
-  text-align: center;
-  padding: 20px;
-}
-
-.header {
-  margin-bottom: 20px;
+.middle-row img {
+  max-width: 100%;
+  height: auto;
+  margin-right: 20px; /* Add horizontal spacing */
 }
 
 h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
+  text-transform: uppercase;
   color: gold;
 }
 
-.content {
-  text-align: center;
+.bottom-row {
+  display: flex;
+  align-items: flex-start; /* Align items to the top */
+  justify-content: space-between;
+  padding-top: 0;
 }
 
-p {
+.bottom-row h2 {
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  align-self: flex-end; /* Position h2 at the bottom */
+}
+
+.bottom-row img {
+  max-width: 100%;
+  height: auto;
+  align-self: flex-start; /* Position image at the top */
+}
+
+.bottom-row p {
   font-size: 1.2rem;
   line-height: 1.6;
-  color: white;
+}
+
+h2 {
+  font-size: 1.5rem;
 }
