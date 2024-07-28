@@ -54,7 +54,6 @@ body {
 .middle-row img {
   max-width: 100%;
   height: auto;
-  margin-right: 20px; /* Add horizontal spacing */
 }
 
 h1 {
@@ -65,7 +64,7 @@ h1 {
 
 .bottom-row {
   display: flex;
-  align-items: flex-start; /* Align items to the top */
+  align-items: center;
   justify-content: space-between;
   padding-top: 0;
 }
@@ -73,13 +72,11 @@ h1 {
 .bottom-row h2 {
   font-size: 1.5rem;
   margin-bottom: 0;
-  align-self: flex-end; /* Position h2 at the bottom */
 }
 
 .bottom-row img {
   max-width: 100%;
   height: auto;
-  align-self: flex-start; /* Position image at the top */
 }
 
 .bottom-row p {
@@ -89,4 +86,68 @@ h1 {
 
 h2 {
   font-size: 1.5rem;
+}
+
+/* Stylization for the About page */
+.about {
+  padding: 20px;
+}
+
+.header {
+  margin-bottom: 20px;
+}
+
+.display-4 {
+  font-size: 2.5rem;
+  color: gold;
+}
+
+.lead {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: white;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+/* Images stylization */
+.image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#uterus,
+#hand {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Stylization for the SearchForm page */
+.search-form {
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  margin-top: 20px;
+}
+
+.search-form input,
+.search-form button {
+  margin: 10px 0;
+}
+
+#map {
+  margin-top: 20px;
+}
+
+/* Stylization for the ResultsList page */
+.results-list {
+  margin-top: 20px;
+}
+
+.list-group-item details {
+  cursor: pointer;
 }

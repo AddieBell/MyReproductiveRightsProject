@@ -6,13 +6,16 @@ const ResultsList = ({ stateName, results }) => {
   }
 
   return (
-    <div>
-      <h2>Results:</h2>
-      <h3>{stateName}</h3>
-      <ul>
+    <div className='mt-4'>
+      <h3>Results:</h3>
+      <h4>{stateName}</h4>
+      <ul className='list-group'>
         {results.map(({ key, value }) => (
-          <li key={key}>
-            {key.replace(/_/g, " ").toUpperCase()}: {value}
+          <li key={key} className='list-group-item bg-dark text-white'>
+            <details>
+              <summary>{key.replace(/_/g, " ").toUpperCase()}</summary>
+              {value}
+            </details>
           </li>
         ))}
       </ul>

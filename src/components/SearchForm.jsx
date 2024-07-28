@@ -33,30 +33,34 @@ const SearchForm = ({
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <div>
+    <div className='container mt-4'>
+      <form onSubmit={handleSubmit} className='mb-4'>
+        <div className='mb-3'>
           <p>
             Users from Hawaii and Alaska, please use State input rather than
             map.
           </p>
-          <label>
+          <label className='form-label'>
             State:
             <input
               type='text'
               value={state}
               onChange={(e) => setState(e.target.value)}
+              className='form-control'
             />
           </label>
         </div>
-        <button type='submit'>Search</button>
+        <button type='submit' className='btn btn-primary'>
+          Search
+        </button>
       </form>
-      <MapComponent onStateClick={onStateClick} />
+      {/* <MapComponent onStateClick={onStateClick} /> */}
       <ResultsList
         stateName={stateName}
         results={searchResults.length > 0 ? searchResults : mapResults}
       />
       {coverageMessage && <p>{coverageMessage}</p>}
+      <MapComponent onStateClick={onStateClick} />
     </div>
   );
 };

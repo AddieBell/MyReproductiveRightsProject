@@ -56,11 +56,13 @@ const MapComponent = ({ onStateClick }) => {
   }, [onStateClick]);
 
   return (
-    <div
-      id='map'
-      ref={mapContainerRef}
-      style={{ width: "100%", height: "600px" }}
-    />
+    <div className='mt-4'>
+      <div
+        id='map'
+        ref={mapContainerRef}
+        style={{ width: "100%", height: "600px" }}
+      />
+    </div>
   );
 };
 
