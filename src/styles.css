@@ -5,33 +5,26 @@ body {
   margin: 0;
   padding-top: 0;
 }
-
 /* Override Bootstrap classes if necessary */
 .bg-light {
   background-color: black !important;
 }
-
 .bg-white {
   background-color: black !important;
 }
-
 .text-light {
   color: white !important;
 }
-
 .navbar {
   margin-bottom: 0;
 }
-
 .navbar-brand img {
   margin-right: 10px;
 }
-
 .navbar-logo {
   width: 150px;
   height: auto;
 }
-
 /* Stylization for the Home page */
 .Home {
   display: flex;
@@ -42,7 +35,6 @@ body {
   background-color: black;
   color: white;
 }
-
 .middle-row {
   display: flex;
   align-items: center;
@@ -50,68 +42,60 @@ body {
   margin: 0;
   padding-bottom: 0;
 }
-
 .middle-row img {
-  max-width: 100%;
+  max-width: 250%;
   height: auto;
+  margin-right: 20px;
 }
-
 h1 {
-  font-size: 3rem;
+  font-size: 7rem;
   text-transform: uppercase;
   color: gold;
+  margin-left: 375px;
 }
-
 .bottom-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-top: 0;
 }
-
 .bottom-row h2 {
   font-size: 1.5rem;
   margin-bottom: 0;
 }
-
 .bottom-row img {
-  max-width: 100%;
+  max-width: 200%;
   height: auto;
+  margin-left: -390px;
 }
-
 .bottom-row p {
   font-size: 1.2rem;
   line-height: 1.6;
 }
-
 h2 {
   font-size: 1.5rem;
+  margin-top: 100px;
+  margin-left: -50px;
 }
-
 /* Stylization for the About page */
 .about {
   padding: 20px;
 }
-
 .header {
   margin-bottom: 20px;
 }
-
 .display-4 {
   font-size: 2.5rem;
   color: gold;
 }
-
 .lead {
   font-size: 1.2rem;
   line-height: 1.6;
   color: white;
 }
-
 .text-justify {
   text-align: justify;
 }
-
 /* Images stylization */
 .image-container {
   display: flex;
@@ -119,13 +103,11 @@ h2 {
   align-items: center;
   justify-content: center;
 }
-
 #uterus,
 #hand {
   max-width: 100%;
   height: auto;
 }
-
 /* Stylization for the SearchForm page */
 .search-form {
   padding: 20px;
@@ -133,21 +115,11 @@ h2 {
   border-radius: 10px;
   margin-top: 20px;
 }
-
 .search-form input,
 .search-form button {
   margin: 10px 0;
 }
-
 #map {
   margin-top: 20px;
 }
-
-/* Stylization for the ResultsList page */
-.results-list {
-  margin-top: 20px;
-}
-
-.list-group-item details {
-  cursor: pointer;
 }
